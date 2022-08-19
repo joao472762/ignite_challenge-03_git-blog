@@ -1,58 +1,41 @@
 import styled from "styled-components";
 
-export const User = styled.section`
-    display:  flex;
+export  const RepositoresContainer = styled.main`
+    display: grid;
     column-gap: 2rem;
+    row-gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 
-    margin-top: -5.375rem;
-    padding: 2rem 2rem 2rem 2.5rem;
-    border-radius: 8px;
-    background-color: ${( {theme} ) => theme.colors["blue-700"]};
-
-    img{
-        width: 9.25rem;
-        height: 9.25rem;
-        border-radius: 8px;
-    }
+    margin-top: 3rem;
 
 `
-export const UserInformation = styled.div`
 
-    header{
-        display: flex;
-        justify-content: space-between;
-        color: ${( {theme} ) => theme.colors.white};
-
-        a{
-            color: ${( {theme} ) => theme.colors.blueLight };
-            font-size: .75rem;
-
-            strong{
-                margin-right: .5rem;
-            }
-        }
-    }
-    p{
-        margin-top: .5rem;
-    }
-
-`
-export const UserFooter = styled.footer`
-    display: flex;
-    column-gap: 2.5rem;
-    margin-top: 2.5rem;
+export const Repository = styled.section`
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 10px;
+    background-color:  ${ ( {theme} ) => theme.colors["blue-500"]};
 
     div{
         display: flex;
-        align-items: center;
-        column-gap: .5rem;
+        column-gap: 2rem;
+        row-gap: 1rem;
+        justify-content: space-between;
+        
+        strong{
+            max-width: 70%;
+            color:  ${ ( {theme} ) => theme.colors.white};
+            font-size: 1.25rem;
+        }
 
         span{
-            color: ${( {theme} ) => theme.colors["gray-100"]};
+         
+            font-size: 0.875rem;
+            color:  ${ ( {theme} ) => theme.colors["blue-100"]};
         }
+    }
 
-        svg{
-            color: ${( {theme} ) => theme.colors["blue-300"]};
-        }
+    p{
+        margin-top: 1rem;
     }
 `

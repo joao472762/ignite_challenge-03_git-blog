@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const UserProfileContainer = styled.section`
     display:  flex;
+    align-items: center;
     column-gap: 2rem;
 
     margin-top: -5.375rem;
@@ -38,8 +39,11 @@ export const UserProfileContent = styled.div`
 
 `
 export const UserFooter = styled.footer`
-    display: flex;
-    column-gap: 2.5rem;
+    display: grid;
+    row-gap: 1.5rem;
+
+    grid-template-columns: repeat(auto-fill,minmax(125px,1fr));
+   
     margin-top: 2.5rem;
 
     div{
