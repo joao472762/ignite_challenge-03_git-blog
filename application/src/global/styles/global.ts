@@ -19,8 +19,9 @@ export const GlobalTheme = createGlobalStyle`
     }
 
     body,input,button{
+        line-height: 160%;
         font: 400 1rem ${( {theme} ) => theme.fonts.Nunito};
-        color: ${( {theme} ) => theme.colors["gray-300"]};;
+        color: ${( {theme} ) => theme.colors["gray-300"]};
 
     }
 

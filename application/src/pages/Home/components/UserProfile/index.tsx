@@ -3,7 +3,7 @@ import { FaBuilding, FaGithub} from "react-icons/fa";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare, faUserGroup} from "@fortawesome/free-solid-svg-icons";
 
-import { Avatar, UserFooter, UserInformation, UserProfileContainer } from "./styles";
+import { Avatar, UserFooter, UserProfileContent, UserProfileContainer } from "./styles";
 
 export function UserProfile(){
     return(
@@ -11,10 +11,10 @@ export function UserProfile(){
 
                 <Avatar src="https://avatars.githubusercontent.com/u/84108989?v=4" />
 
-                <UserInformation>
-
+                <UserProfileContent>
                     <header>
                         <h2>Amanda Aguiar</h2>
+
                         <Link to={'https://github.com/joao472762'}>
                             <strong>GITHUB</strong>
                             <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
@@ -29,21 +29,22 @@ export function UserProfile(){
 
                     <UserFooter>
                         <div>
-                            <FaGithub/>
+                            <FaGithub/> 
                             <span>amanda</span>
-
                         </div>
+
                         <div>
                             <FaBuilding/>
                             <span>myself</span>
                         </div>
+
                         <div>
 
                             <FontAwesomeIcon icon={faUserGroup} />
                             <span>30 seguidores</span>
                         </div>
                     </UserFooter>
-                </UserInformation>
+                </UserProfileContent>
             </UserProfileContainer>
     )
 }

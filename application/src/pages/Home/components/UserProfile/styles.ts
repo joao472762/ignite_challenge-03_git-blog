@@ -8,7 +8,7 @@ export const UserProfileContainer = styled.section`
     padding: 2rem 2rem 2rem 2.5rem;
     border-radius: 8px;
     background-color: ${( {theme} ) => theme.colors["blue-700"]};
-    
+
 
 `
 export const Avatar = styled.img`
@@ -16,7 +16,7 @@ export const Avatar = styled.img`
     height: 9.25rem;
     border-radius: 8px;
 `
-export const UserInformation = styled.div`
+export const UserProfileContent = styled.div`
 
     header{
         display: flex;
