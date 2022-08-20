@@ -1,67 +1,100 @@
 import { FaGithub} from "react-icons/fa";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare, faChevronLeft,faComment,faCalendarDay} from "@fortawesome/free-solid-svg-icons";
 
 import { IssueContent, IssueIntrodution, IssuesStatus } from "./styles";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Inssue } from "../Home/styles";
+import ReactMarkdown from 'react-markdown'
+import { formatDistanceToNow } from "date-fns";
+import ptBR from "date-fns/locale/pt-BR";
+
+
+interface Inssue {
+    title: string,
+    body: string,
+    avatar_url: string,
+    html_url: string,
+    created_at: string,
+    comments: number,
+    user:{
+        login: string
+    }
+}
 
 export function InnsueDetails(){
+    const [inssue, setInssue] =  useState<Inssue>()
+
+    const  {issueId} = useParams()
+
+    async function loadInssues(){
+        const respose = await axios.get(`https://api.github.com/repos/joao472762/ignite_react_native_dt-money-recap/issues/${issueId}`)
+        
+        setInssue(respose.data)
+    }
+
+    useEffect(()=>{
+        loadInssues()
+    },[])
+
+ 
+
+    function currentDistaceToNow(date: string ){
+        const currentDate = date as string
+        const distanceToNow =  formatDistanceToNow(new Date(currentDate),{
+            locale: ptBR,
+            addSuffix: true
+        })
+
+        return distanceToNow
+    }
+
+
     return(
         <div>
-            <IssueIntrodution>
-                <nav>
-                    <NavLink to={'/'}>
-                            <FontAwesomeIcon icon={faChevronLeft}/>
-                            <span>voltar</span>
-                    </NavLink>
-
-                    <Link to='#'>
-                        <span>ver no gitHub</span>
-                        <FontAwesomeIcon icon={faArrowUpRightFromSquare}/>
-                    </Link>
-
-                </nav>
-                
-                <h2>JavaScript data types and data structures</h2>
-
-                <IssuesStatus>
+            {
+                inssue && (
                     <div>
-                        <FaGithub/>
-                        <span>amanda Aguiar</span>
-                    </div>
-                    <div>
-                        <FontAwesomeIcon icon={faCalendarDay}/>
-                        <span> há um dia</span>
-                    </div>
-                    <div>
-                        <FontAwesomeIcon icon={faComment}/>
-                        <span>5 comentários</span>
-                    </div>
-                </IssuesStatus>
-            </IssueIntrodution>
+                        <IssueIntrodution>
+                            <nav>
+                                <NavLink to={'/'}>
+                                        <FontAwesomeIcon icon={faChevronLeft}/>
+                                        <span>voltar</span>
+                                </NavLink>
 
-            <IssueContent>
-                <p>
-                    Programming languages all have built-in 
-                    data structures, but these often differ from one language to another. 
-                    This article attempts to list the built-in data structures available in
-                    JavaScript and what properties they have. These can be used to build other d
-                    ata structures. Wherever possible, comparisons with other languages are drawn.
+                                <a href={inssue.html_url} target={"_blank"}>
+                                    <span>ver no gitHub</span>
+                                    <FontAwesomeIcon icon={faArrowUpRightFromSquare}/>
+                                </a>
 
-                </p>
-                <span>
-                    Dynamic typing
-                </span>
-                <p>
-                    JavaScript is a loosely typed and dynamic language. 
-                    Variables in JavaScript are not directly associated with any 
-                    particular value type, and any variable can be assigned (and re-assigned) values of all types:
-                </p>
+                            </nav>
+                            
+                            <h2>{inssue?.title}</h2>
 
-                <section>
-                    <div>i</div>
-                </section>
-            </IssueContent>
+                            <IssuesStatus>
+                                <div>
+                                    <FaGithub/>
+                                    <span>{inssue?.user.login}</span>
+                                </div>
+                                <div>
+                                    <FontAwesomeIcon icon={faCalendarDay}/>
+                                    <span>{currentDistaceToNow(inssue?.created_at) }</span>
+                                </div>
+                                <div>
+                                    <FontAwesomeIcon icon={faComment}/>
+                                    <span>{inssue.comments} comentários</span>
+                                </div>
+                            </IssuesStatus>
+                        </IssueIntrodution>
+                        <ReactMarkdown>
+                            {inssue.body}
+                        </ReactMarkdown>
+           
+                    </div>
+                )
+            }
         </div>
     )
 }

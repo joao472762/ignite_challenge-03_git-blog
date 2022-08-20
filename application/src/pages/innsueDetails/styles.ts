@@ -4,6 +4,7 @@ export const IssueIntrodution = styled.section`
     padding: 2rem;
     border-radius: 10px;
     margin-top: -5.25rem;
+    margin-bottom: 2rem;
     background-color:  ${ ( {theme} ) => theme.colors["blue-700"]};
 
     nav{
