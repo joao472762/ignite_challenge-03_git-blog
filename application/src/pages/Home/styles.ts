@@ -14,6 +14,7 @@ export const SearchFormContainer = styled.section`
             color: ${ ( {theme} ) => theme.colors["blue-100"]};
         }
     }
+
     input{
         width: 100% ;
         padding: .75rem 1rem;
@@ -29,7 +30,7 @@ export const SearchFormContainer = styled.section`
     }
 `
 
-export  const RepositoresContainer = styled.main`
+export  const InssuesContainer = styled.main`
     display: grid;
     column-gap: 2rem;
     row-gap: 2rem;
@@ -39,11 +40,16 @@ export  const RepositoresContainer = styled.main`
 
 `
 
-export const Repository = styled.section`
+export const Inssue = styled.section`
     padding: 2rem;
     margin-bottom: 2rem;
     border-radius: 10px;
+    cursor: pointer;
     background-color:  ${ ( {theme} ) => theme.colors["blue-500"]};
+
+    strong{
+        min-height: 4rem;
+    }
 
     div{
         display: flex;
@@ -52,9 +58,12 @@ export const Repository = styled.section`
         justify-content: space-between;
         
         strong{
-            max-width: 70%;
+            
             color:  ${ ( {theme} ) => theme.colors.white};
             font-size: 1.25rem;
+        }
+        time{
+            text-align: center;
         }
 
         span{

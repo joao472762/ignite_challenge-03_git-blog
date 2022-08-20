@@ -1,44 +1,69 @@
-import { useEffect, useState, ChangeEvent, InputHTMLAttributes} from "react";
-import { api } from "../../libs/axios";
-import { SearchForm } from "./components/SearchForm";
-import { UserProfile } from "./components/UserProfile";
-import { RepositoresContainer, Repository, SearchFormContainer } from "./styles";
-import {formatDistanceToNow} from 'date-fns'
-import ptBR from "date-fns/esm/locale/pt-BR/index.js";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import {formatDistanceToNow,format} from 'date-fns'
+import ptBR from "date-fns/esm/locale/pt-BR/index.js";
+import { useEffect, useState, ChangeEvent,} from "react";
+
+import { UserProfile } from "./components/UserProfile";
+import { InssuesContainer, Inssue, SearchFormContainer } from "./styles";
+
 
 interface Inssues {
-
+    body: string
     title: string,
+    updated_at: string,
     number: number
-    updated_at: string
 }
 
 export function Home(){
-    const [inssues, setInssues] =  useState<Inssues[]>([])
-    const [query,setQuery] = useState('')
 
-    async function SearchRepos(){
-        const response  = await api.get('about Rap')
-        
+    const navigate = useNavigate()
+    const [query,setQuery] = useState('')
+    const [inssues, setInssues] =  useState<Inssues[]>([])
+
+    async function SearchInssues(){
+        const inssuesUrl = 'https://api.github.com/repos/joao472762/ignite_react_native_dt-money-recap/issues'
+        const response  = await axios.get(inssuesUrl)
         setInssues(response.data)
     }
 
     useEffect(() => {
-        SearchRepos()
+        SearchInssues()
     }, [])
-    
-
-    const issuesFiltred = inssues.filter(( {title} ) => title.includes(query))
-    
 
     function handleChangeQuery(event: ChangeEvent<HTMLInputElement>){
         setQuery(() => event.target.value)
     }
 
+    function resumeInssueBody(body:  string, maxLength = 200){
+        const bodyResumed = body.slice(0, maxLength)
+        return bodyResumed
+    }
+
+    function formatDate(date: string){
+        const dateFormated = format(new Date(date), "dd'/'LL'/' yyyy")  
+        return dateFormated
+    }
+
+    function currentDistaceToNow(date: string){
+        const distanceToNow =  formatDistanceToNow(new Date(date),{
+            locale: ptBR,
+            addSuffix: true
+        })
+
+        return distanceToNow
+    }
+
+    function redirectUser(id: number){
+        navigate(`${id}`)
+    }
+
+    const issuesFiltred = inssues.filter(( {title} ) => title.includes(query))
+
     return(
         <div>
             <UserProfile/>
+            
             <SearchFormContainer>
                 <div>
                     <strong>Publicações</strong>
@@ -51,30 +76,27 @@ export function Home(){
                     onChange= {handleChangeQuery} 
                 />
              </SearchFormContainer>
-            <RepositoresContainer>
+
+            <InssuesContainer>
                 {
-                    issuesFiltred.map(( inssues ) => (
-                        <Repository key={inssues.number}>
+                    issuesFiltred.map(( inssue ) => (
+                        <Inssue  
+                            onClick={ () => redirectUser(inssue.number)}
+                            key={inssue.number}
+                        >
                             <div>
-                                <strong>{inssues.title}</strong>
-                                <time>
-                                    {
-                                        formatDistanceToNow(new Date(inssues.updated_at),{
-                                            locale: ptBR,
-                                            addSuffix: true
-                                        })
-                                    }
+                                <strong>{inssue.title}</strong>
+                            
+                                <time dateTime={inssue.updated_at} title={formatDate(inssue.updated_at)}>
+                                    {currentDistaceToNow(inssue.updated_at)}
                                 </time>
                             </div>
         
-                            <p>
-                                the same thing
-                            </p>
-                        </Repository>
+                            <p> { resumeInssueBody(inssue.body)}</p>
+                        </Inssue>
                     ))
                 }
-              
-            </RepositoresContainer>
+            </InssuesContainer>
         </div>
     )
 }
