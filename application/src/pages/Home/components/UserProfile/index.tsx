@@ -4,38 +4,61 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare, faUserGroup} from "@fortawesome/free-solid-svg-icons";
 
 import { Avatar, UserFooter, UserProfileContent, UserProfileContainer } from "./styles";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+
+interface GitHubProfile {
+    avatar_url: string,
+    html_url: string,
+    name: string,
+    company: string,
+    bio: string,
+    followers: number,
+}
 
 export function UserProfile(){
+    const [gitHubProfile, setGithubProfile] = useState<GitHubProfile>()
+
+    async function loadGitHubProfile(){
+        const profileUrl = 'https://api.github.com/users/joao472762'
+        const response = await axios.get(profileUrl)
+        setGithubProfile(response.data)
+    }
+
+    useEffect(() => {
+        loadGitHubProfile()
+    }, [])
+
+    const firstName = gitHubProfile?.name.split(' ')[0  ]
+    
     return(
         <UserProfileContainer>
 
-                <Avatar src="https://avatars.githubusercontent.com/u/84108989?v=4" />
+                <Avatar src= {gitHubProfile?.avatar_url} />
 
                 <UserProfileContent>
                     <header>
-                        <h2>Amanda Aguiar</h2>
+                        <h2>{gitHubProfile?.name}</h2>
 
-                        <Link to={'https://github.com/joao472762'}>
+                        <a href= {gitHubProfile?.html_url} target='_blank'>
                             <strong>GITHUB</strong>
                             <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
-                        </Link>
+                        </a>
                     </header>
                
                     <p>
-                        Tristique volutpat pulvinar vel massa, 
-                        pellentesque egestas. Eu viverra massa quam d
-                        ignissim aenean malesuada suscipit. Nunc, volutpat pulvinar vel mass.
+                        {gitHubProfile?.bio}
                     </p>
 
                     <UserFooter>
                         <div>
                             <FaGithub/> 
-                            <span>amanda</span>
+                            <span>{firstName}</span>
                         </div>
 
                         <div>
                             <FaBuilding/>
-                            <span>myself</span>
+                            <span>{gitHubProfile?.company}</span>
                         </div>
 
                         <div>

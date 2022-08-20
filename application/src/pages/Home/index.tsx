@@ -1,50 +1,79 @@
+import { useEffect, useState, ChangeEvent, InputHTMLAttributes} from "react";
+import { api } from "../../libs/axios";
 import { SearchForm } from "./components/SearchForm";
 import { UserProfile } from "./components/UserProfile";
-import { RepositoresContainer, Repository } from "./styles";
+import { RepositoresContainer, Repository, SearchFormContainer } from "./styles";
+import {formatDistanceToNow} from 'date-fns'
+import ptBR from "date-fns/esm/locale/pt-BR/index.js";
+import axios from "axios";
 
+interface Inssues {
+
+    title: string,
+    number: number
+    updated_at: string
+}
 
 export function Home(){
+    const [inssues, setInssues] =  useState<Inssues[]>([])
+    const [query,setQuery] = useState('')
+
+    async function SearchRepos(){
+        const response  = await api.get('about Rap')
+        
+        setInssues(response.data)
+    }
+
+    useEffect(() => {
+        SearchRepos()
+    }, [])
+    
+
+    const issuesFiltred = inssues.filter(( {title} ) => title.includes(query))
+    
+
+    function handleChangeQuery(event: ChangeEvent<HTMLInputElement>){
+        setQuery(() => event.target.value)
+    }
+
     return(
         <div>
-            <UserProfile/> 
-            <SearchForm/>
+            <UserProfile/>
+            <SearchFormContainer>
+                <div>
+                    <strong>Publicações</strong>
+                    <span>{issuesFiltred.length} publicações</span>
+                </div>
+                
+                <input 
+                    type="text" 
+                    placeholder = "Buscar conteúdo" 
+                    onChange= {handleChangeQuery} 
+                />
+             </SearchFormContainer>
             <RepositoresContainer>
-                <Repository>
-                    <div>
-                        <strong>JavaScript data types and data structures</strong>
-                        <time>   há 1 dia</time>
-                    </div>
-
-                    <p>
-                        Programming languages all have built-in
-                        data structures, but these often differ from one language to
-                         another. This article attempts to list the built-in data structures available in 
-                    </p>
-                </Repository>
-                <Repository>
-                    <div>
-                        <strong>JavaScript data types and data structures</strong>
-                        <time>   há 1 dia</time>
-                    </div>
-
-                    <p>
-                        Programming languages all have built-in
-                        data structures, but these often differ from one language to
-                         another. This article attempts to list the built-in data structures available in 
-                    </p>
-                </Repository>
-                <Repository>
-                    <div>
-                        <strong>JavaScript data types and data structures</strong>
-                        <time>   há 1 dia</time>
-                    </div>
-
-                    <p>
-                        Programming languages all have built-in
-                        data structures, but these often differ from one language to
-                         another. This article attempts to list the built-in data structures available in 
-                    </p>
-                </Repository>
+                {
+                    issuesFiltred.map(( inssues ) => (
+                        <Repository key={inssues.number}>
+                            <div>
+                                <strong>{inssues.title}</strong>
+                                <time>
+                                    {
+                                        formatDistanceToNow(new Date(inssues.updated_at),{
+                                            locale: ptBR,
+                                            addSuffix: true
+                                        })
+                                    }
+                                </time>
+                            </div>
+        
+                            <p>
+                                the same thing
+                            </p>
+                        </Repository>
+                    ))
+                }
+              
             </RepositoresContainer>
         </div>
     )

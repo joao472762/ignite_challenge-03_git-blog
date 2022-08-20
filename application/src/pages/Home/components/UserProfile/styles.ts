@@ -11,6 +11,7 @@ export const UserProfileContainer = styled.section`
     background-color: ${( {theme} ) => theme.colors["blue-700"]};
 
 
+
 `
 export const Avatar = styled.img`
     width: 9.25rem;
@@ -18,13 +19,19 @@ export const Avatar = styled.img`
     border-radius: 8px;
 `
 export const UserProfileContent = styled.div`
+    width: 100%;
+
+  
 
     header{
         display: flex;
+       
         justify-content: space-between;
         color: ${( {theme} ) => theme.colors.white};
+      
 
         a{
+            line-height: 0px;
             color: ${( {theme} ) => theme.colors.blueLight };
             font-size: .75rem;
 
@@ -41,7 +48,7 @@ export const UserProfileContent = styled.div`
 export const UserFooter = styled.footer`
     display: grid;
     row-gap: 1.5rem;
-
+    max-width: 400px;
     grid-template-columns: repeat(auto-fill,minmax(125px,1fr));
    
     margin-top: 2.5rem;
