@@ -55,7 +55,7 @@ export function Home(){
     }
 
     function redirectUser(id: number){
-        navigate(`${id}`)
+        navigate(`/post/${id}`)
     }
 
     const issuesFiltred = inssues.filter(( {title} ) => title.includes(query))

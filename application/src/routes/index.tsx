@@ -4,9 +4,9 @@ import {
     Routes
 } from 'react-router-dom'
 
-import { DefaultLayout } from '../layouts/DefaultLayout'
 import { Home } from '../pages/Home'
-import { RepoInssues } from '../pages/RepoInssues'
+import { DefaultLayout } from '../layouts/DefaultLayout'
+import { InnsueDetails } from '../pages/innsueDetails'
 
 export function Router(){
     return(
@@ -14,7 +14,7 @@ export function Router(){
             <Routes>
                 <Route path='/' element={<DefaultLayout/>}>
                     <Route path='/' element={<Home/>}/>
-                    <Route path='/:issues' element={<RepoInssues/>}/>
+                    <Route path='/post/:issueId' element={<InnsueDetails/>}/>
                 </Route>
             </Routes>
         </BrowserRouter>

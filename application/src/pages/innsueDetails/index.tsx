@@ -1,10 +1,11 @@
-import { Link, NavLink } from "react-router-dom";
 import { FaGithub} from "react-icons/fa";
+import { Link, NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare, faChevronLeft,faComment,faCalendarDay} from "@fortawesome/free-solid-svg-icons";
+
 import { IssueContent, IssueIntrodution, IssuesStatus } from "./styles";
 
-export function RepoInssues(){
+export function InnsueDetails(){
     return(
         <div>
             <IssueIntrodution>
