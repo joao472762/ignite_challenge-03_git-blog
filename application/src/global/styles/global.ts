@@ -15,7 +15,9 @@ export const GlobalTheme = createGlobalStyle`
     }
 
     body{
-        background-color: ${( {theme} ) => theme.colors["blue-800"]};;
+        background-color: ${( {theme} ) => theme.colors["blue-800"]};
+
+        
     }
 
     body,input,button{
@@ -23,6 +25,12 @@ export const GlobalTheme = createGlobalStyle`
         font: 400 1rem ${( {theme} ) => theme.fonts.Nunito};
         color: ${( {theme} ) => theme.colors["gray-300"]};
 
+    }
+
+    @media (max-width: 420px){
+        html{
+            font-size: 85%;
+        }
     }
 
 `

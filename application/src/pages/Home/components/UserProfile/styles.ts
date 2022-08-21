@@ -54,19 +54,19 @@ export const UserProfileContent = styled.div`
 
 `
 export const UserFooter = styled.footer`
-    display: grid;
-    row-gap: 1.5rem;
+    display: grid; 
+    grid-template-columns: repeat(auto-fill,125px);
     
-    grid-template-columns: repeat(auto-fill,minmax(125px,1fr));
-   
     margin-top: 2.5rem;
 
     div{
+        width: max-content;
         display: flex;
         align-items: center;
         column-gap: .5rem;
-
+        
         span{
+           
             color: ${( {theme} ) => theme.colors["gray-100"]};
         }
 

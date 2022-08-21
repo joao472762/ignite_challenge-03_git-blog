@@ -1,5 +1,5 @@
-import Logo from '../../../../assets/logoGitBlog.svg'
 import { HeaderContainer } from './styles'
+import Logo from '../../../../assets/logoGitBlog.svg'
 
 export function Header(){
     return(
