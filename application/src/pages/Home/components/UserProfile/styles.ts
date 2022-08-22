@@ -56,6 +56,7 @@ export const UserProfileContent = styled.div`
 export const UserFooter = styled.footer`
     display: grid; 
     grid-template-columns: repeat(auto-fill,125px);
+    row-gap: 1rem;
     
     margin-top: 2.5rem;
 
